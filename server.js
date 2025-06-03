@@ -2,6 +2,7 @@ const express = require('express');
 const winston = require('winston');
 const sequelize = require('./config/database');
 const carRoutes = require('./delivery/carRoutes');
+const orderRoutes = require('./delivery/orderRoutes');
 
 // Настройка логгера
 const logger = winston.createLogger({
@@ -29,9 +30,10 @@ app.use((req, res, next) => {
 
 // Маршруты
 app.use('/api/cars', carRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Подключение к базе данных и запуск сервера
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync().then(() => {
   logger.info('База данных синхронизирована');
   app.listen(port, () => {
     logger.info(`Сервер запущен на порту ${port}`);
