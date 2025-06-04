@@ -18,4 +18,11 @@ const updateOrderStatus = async (id, status) => {
   return order.status;
 };
 
-module.exports = { createOrder, getOrderStatus, updateOrderStatus };
+const deleteOrder = async (id) => {
+  const order = await Order.findByPk(id);
+  if (!order) return false;
+  await order.destroy();
+  return true;
+};
+
+module.exports = { createOrder, getOrderStatus, updateOrderStatus, deleteOrder };

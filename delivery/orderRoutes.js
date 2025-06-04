@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createOrder, checkStatus, changeStatus } = require('../usecase/orderUsecase');
+const { createOrder, checkStatus, changeStatus, cancelOrder } = require('../usecase/orderUsecase');
 
 router.post('/createOrder', async (req, res) => {
   try {
@@ -28,6 +28,16 @@ router.patch('/changeStatus/:id', async (req, res) => {
     res.json({ status });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+router.delete('/cancelOrder/:id', async (req, res) => {
+  try {
+    const success = await cancelOrder(req.params.id);
+    if (!success) return res.status(404).json({ error: 'Заказ не найден' });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
