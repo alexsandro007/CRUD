@@ -4,4 +4,11 @@ const createOrder = async (orderData) => {
   return await Order.create(orderData);
 };
 
-module.exports = { createOrder };
+const getOrderStatus = async (id) => {
+  const order = await Order.findByPk(id, {
+    attributes: ['status'] // Возвращаем только поле status
+  });
+  return order ? order.status : null;
+};
+
+module.exports = { createOrder, getOrderStatus };

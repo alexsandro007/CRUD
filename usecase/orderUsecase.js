@@ -1,4 +1,4 @@
-const { createOrder: createOrderRepo } = require('../repository/orderRepository');
+const { createOrder: createOrderRepo, getOrderStatus } = require('../repository/orderRepository');
 
 const createOrder = async (orderData) => {
   // Валидация
@@ -22,4 +22,8 @@ const createOrder = async (orderData) => {
   return await createOrderRepo(order);
 };
 
-module.exports = { createOrder };
+const checkStatus = async (id) => {
+  return await getOrderStatus(id);
+};
+
+module.exports = { createOrder, checkStatus };
