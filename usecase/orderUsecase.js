@@ -1,4 +1,4 @@
-const { createOrder: createOrderRepo, getOrderStatus } = require('../repository/orderRepository');
+const { createOrder: createOrderRepo, getOrderStatus, updateOrderStatus } = require('../repository/orderRepository');
 
 const createOrder = async (orderData) => {
   // Валидация
@@ -26,4 +26,16 @@ const checkStatus = async (id) => {
   return await getOrderStatus(id);
 };
 
-module.exports = { createOrder, checkStatus };
+const changeStatus = async (id, status) => {
+  // Валидация
+  if (!status) {
+    throw new Error('Статус обязателен');
+  }
+  if (!['created', 'in_transit', 'delivered'].includes(status)) {
+    throw new Error('Статус должен быть одним из: created, in_transit, delivered');
+  }
+
+  return await updateOrderStatus(id, status);
+};
+
+module.exports = { createOrder, checkStatus, changeStatus };
