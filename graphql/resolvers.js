@@ -2,8 +2,8 @@ const { getCarList } = require('../repository/carRepository');
 
 const resolvers = {
   Query: {
-    getCarList: async () => {
-      return await getCarList();
+    getCarList: async (_, { filterByBrand, sortByBrand }) => {
+      return await getCarList({ filterByBrand, sortByBrand });
     },
   },
   Mutation: {

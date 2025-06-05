@@ -21,8 +21,23 @@ const deleteCar = async (id) => {
   return true;
 };
 
-const getCarList = async () => {
-  return await CarBrand.findAll();
+const getCarList = async ({ filterByBrand, sortByBrand } = {}) => {
+  const where = {};
+  if (filterByBrand) {
+    where.brand = {
+      [CarBrand.sequelize.Sequelize.Op.like]: `%${filterByBrand}%`
+    };
+  }
+
+  const order = [];
+  if (sortByBrand) {
+    order.push(['brand', sortByBrand]);
+  }
+
+  return await CarBrand.findAll({
+    where,
+    order
+  });
 };
 
 module.exports = { createCar, getCar, updateCar, deleteCar, getCarList };

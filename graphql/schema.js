@@ -1,6 +1,11 @@
 const gql = require('graphql-tag');
 
 const typeDefs = gql`
+  enum SortOrder {
+    ASC
+    DESC
+  }
+
   type CarBrand {
     id: Int!
     brand: String!
@@ -13,7 +18,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getCarList: [CarBrand!]!
+    getCarList(filterByBrand: String, sortByBrand: SortOrder): [CarBrand!]!
   }
 
   type Mutation {
