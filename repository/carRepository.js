@@ -40,4 +40,8 @@ const getCarList = async ({ filterByBrand, sortByBrand } = {}) => {
   });
 };
 
-module.exports = { createCar, getCar, updateCar, deleteCar, getCarList };
+const getCarById = async (id) => {
+  return await CarBrand.findByPk(id);
+};
+
+module.exports = { createCar, getCar, updateCar, deleteCar, getCarList, getCarById };

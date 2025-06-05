@@ -19,10 +19,10 @@ const typeDefs = gql`
 
   type Query {
     getCarList(filterByBrand: String, sortByBrand: SortOrder): [CarBrand!]!
+    getCarById(id: Int!): CarBrand
   }
 
   type Mutation {
-    # Заготовка для будущих мутаций
     placeholder: String
   }
 `;
