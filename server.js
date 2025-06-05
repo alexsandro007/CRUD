@@ -3,6 +3,9 @@ const winston = require('winston');
 const sequelize = require('./config/database');
 const carRoutes = require('./delivery/carRoutes');
 const orderRoutes = require('./delivery/orderRoutes');
+const { ApolloServer } = require('@apollo/server');
+const { expressMiddleware } = require('@apollo/server/express4');
+const { typeDefs, resolvers } = require('./graphql');
 
 // Настройка логгера
 const logger = winston.createLogger({
@@ -28,15 +31,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Маршруты
+// REST API маршруты
 app.use('/api/cars', carRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Настройка Apollo Server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
 // Подключение к базе данных и запуск сервера
-sequelize.sync().then(() => {
+sequelize.sync().then(async () => {
   logger.info('База данных синхронизирована');
+
+  // Запуск Apollo Server
+  await server.start();
+
+  // Подключение Apollo Server к Express
+  app.use('/graphql', expressMiddleware(server));
+
   app.listen(port, () => {
     logger.info(`Сервер запущен на порту ${port}`);
+    logger.info(`GraphQL доступен на http://localhost:${port}/graphql`);
   });
 }).catch(err => {
   logger.error('Ошибка подключения к базе данных:', err);
