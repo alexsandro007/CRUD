@@ -39,6 +39,7 @@ app.use('/api/orders', orderRoutes);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true, // Включаем интроспекцию для Apollo Studio
 });
 
 // Подключение к базе данных и запуск сервера

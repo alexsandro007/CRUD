@@ -25,6 +25,14 @@ const typeDefs = gql`
     purchaseCount: Int
   }
 
+  input UpdateCarInput {
+    brand: String
+    model: String
+    fuelType: String
+    bodyType: String
+    purchaseCount: Int
+  }
+
   type Query {
     getCarList(filterByBrand: String, sortByBrand: SortOrder): [CarBrand!]!
     getCarById(id: Int!): CarBrand
@@ -32,6 +40,7 @@ const typeDefs = gql`
 
   type Mutation {
     createCar(input: CreateCarInput!): CarBrand!
+    updateCar(id: Int!, input: UpdateCarInput!): CarBrand
     placeholder: String
   }
 `;
