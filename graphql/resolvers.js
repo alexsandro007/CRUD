@@ -1,4 +1,4 @@
-const { getCarList, getCarById } = require('../repository/carRepository');
+const { getCarList, getCarById, createCar } = require('../repository/carRepository');
 
 const resolvers = {
   Query: {
@@ -10,6 +10,16 @@ const resolvers = {
     },
   },
   Mutation: {
+    createCar: async (_, { input }) => {
+      const carData = {
+        brand: input.brand,
+        model: input.model,
+        fuelType: input.fuelType,
+        bodyType: input.bodyType,
+        purchaseCount: input.purchaseCount || 0, // Значение по умолчанию
+      };
+      return await createCar(carData);
+    },
     placeholder: () => 'No mutations implemented yet',
   },
 };

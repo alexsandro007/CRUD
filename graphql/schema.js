@@ -17,12 +17,21 @@ const typeDefs = gql`
     updatedAt: String!
   }
 
+  input CreateCarInput {
+    brand: String!
+    model: String!
+    fuelType: String!
+    bodyType: String!
+    purchaseCount: Int
+  }
+
   type Query {
     getCarList(filterByBrand: String, sortByBrand: SortOrder): [CarBrand!]!
     getCarById(id: Int!): CarBrand
   }
 
   type Mutation {
+    createCar(input: CreateCarInput!): CarBrand!
     placeholder: String
   }
 `;
