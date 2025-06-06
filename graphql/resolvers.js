@@ -8,6 +8,10 @@ const resolvers = {
     getCarById: async (_, { id }) => {
       return await getCarById(id);
     },
+    getCarPurchaseCount: async (_, { id }) => {
+      const car = await getCarById(id);
+      return car ? car.purchaseCount : 0;
+    },
   },
   Mutation: {
     createCar: async (_, { input }) => {

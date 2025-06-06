@@ -36,6 +36,7 @@ const typeDefs = gql`
   type Query {
     getCarList(filterByBrand: String, sortByBrand: SortOrder): [CarBrand!]!
     getCarById(id: Int!): CarBrand
+    getCarPurchaseCount(id: Int!): Int!
   }
 
   type Mutation {
