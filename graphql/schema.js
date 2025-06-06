@@ -41,6 +41,7 @@ const typeDefs = gql`
   type Mutation {
     createCar(input: CreateCarInput!): CarBrand!
     updateCar(id: Int!, input: UpdateCarInput!): CarBrand
+    deleteCar(id: Int!): Boolean!
     placeholder: String
   }
 `;

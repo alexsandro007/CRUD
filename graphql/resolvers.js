@@ -1,4 +1,4 @@
-const { getCarList, getCarById, createCar, updateCar } = require('../repository/carRepository');
+const { getCarList, getCarById, createCar, updateCar, deleteCar } = require('../repository/carRepository');
 
 const resolvers = {
   Query: {
@@ -28,9 +28,11 @@ const resolvers = {
         bodyType: input.bodyType,
         purchaseCount: input.purchaseCount,
       };
-      // Удаляем undefined поля
       Object.keys(carData).forEach(key => carData[key] === undefined && delete carData[key]);
       return await updateCar(id, carData);
+    },
+    deleteCar: async (_, { id }) => {
+      return await deleteCar(id);
     },
     placeholder: () => 'No mutations implemented yet',
   },
